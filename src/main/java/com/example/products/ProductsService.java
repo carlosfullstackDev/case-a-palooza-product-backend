@@ -17,7 +17,7 @@ public class ProductsService {
 
     public Optional<Product> getProductById(Long productId) {
         Optional<Product> product =  productRepository.findById(productId);
-        
+
         if(productRepository.findById(productId).isPresent()){
             return product;
         }
