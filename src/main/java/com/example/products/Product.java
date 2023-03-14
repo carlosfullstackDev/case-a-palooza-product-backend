@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,43 +21,9 @@ public class Product {
     @Column(name = "price")
     private double price;
 
-    private Product() {}
-
-    public static class Builder {
-        private final Long id;
-        private final String name;
-        private final double price;
-        private String description = "";
-        private String imageUrl = "";
-
-        public Builder(Long id, String name, double price) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-        }
-
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder imageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-            return this;
-        }
-
-        public Product build() {
-            Product product = new Product();
-            product.id = this.id;
-            product.name = this.name;
-            product.price = this.price;
-            product.description = this.description;
-            product.imageUrl = this.imageUrl;
-            return product;
-        }
+    private Product() {
+        // private constructor to enforce the use of the builder pattern
     }
-
-    // getters
 
     public Long getId() {
         return id;
@@ -78,5 +43,56 @@ public class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long id;
+        private String name;
+        private String description;
+        private String imageUrl;
+        private double price;
+
+        private Builder() {
+            // private constructor to enforce the use of the static builder method
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder imageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Builder price(double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Product build() {
+            Product product = new Product();
+            product.id = this.id;
+            product.name = this.name;
+            product.description = this.description;
+            product.imageUrl = this.imageUrl;
+            product.price = this.price;
+            return product;
+        }
     }
 }
